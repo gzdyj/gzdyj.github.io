@@ -15,18 +15,10 @@ export const siteConfig: SiteConfig = {
 	site_url: "https://gzdyj.github.io",
 
 	// 站点描述
-	description:
-		"gzdyj 的个人博客，记录技术成长与生活思考。",
+	description: "gzdyj 的个人博客，记录技术成长与生活思考。",
 
 	// 站点关键词
-	keywords: [
-		"gzdyj",
-		"博客",
-		"技术博客",
-		"个人博客",
-		"Astro",
-		"Firefly",
-	],
+	keywords: ["gzdyj", "博客", "技术博客", "个人博客", "Astro", "Firefly"],
 
 	// 主题色
 	themeColor: {
