@@ -1,8 +1,8 @@
 ---
 title: SpringBoot 邮件发送与异步优化
 published: 2026-07-23
-description: Spring Boot 集成邮件发送，以及使用 @Async 实现异步邮件发送，并附 @Async 失效的常见原因排查清单。
-tags: [SpringBoot, 邮件, 异步, @Async]
+description: "Spring Boot 集成邮件发送，以及使用 @Async 实现异步邮件发送，并附 @Async 失效的常见原因排查清单。"
+tags: [SpringBoot, 邮件, 异步]
 category: Java
 ---
 
