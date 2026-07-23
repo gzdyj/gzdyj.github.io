@@ -12,7 +12,7 @@ export const siteConfig: SiteConfig = {
 	subtitle: "记录技术，分享生活",
 
 	// 站点 URL
-	site_url: "https://gzdyj.github.io",
+	site_url: "https://blog.zinzin.cc",
 
 	// 站点描述
 	description: "gzdyj 的个人博客，记录技术成长与生活思考。",
