@@ -8,7 +8,26 @@ export const friendsPageConfig: FriendsPageConfig = {
 	randomizeSort: false,
 };
 
-export const friendsConfig: FriendLink[] = [];
+export const friendsConfig: FriendLink[] = [
+	{
+		title: "smallkun",
+		imgurl: "https://yp.smallkun.cn/halo/f0792b4f1eaa79e52dbb9766289724a6.gif",
+		desc: "C/C++、Java、前后端、服务器运维，一个热爱技术的年轻人。",
+		siteurl: "https://smallkun.cn/",
+		tags: ["技术", "C语言", "Linux"],
+		weight: 1,
+		enabled: true,
+	},
+	{
+		title: "久雨",
+		imgurl: "/images/favicon/favicon.ico",
+		desc: "久雨的 Halo 博客。",
+		siteurl: "http://109.107.137.49:8090/",
+		tags: ["博客"],
+		weight: 1,
+		enabled: true,
+	},
+];
 
 export const getEnabledFriends = (): FriendLink[] => {
 	const friends = friendsConfig.filter((friend) => friend.enabled);
