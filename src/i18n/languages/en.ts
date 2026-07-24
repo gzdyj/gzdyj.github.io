@@ -427,4 +427,11 @@ export const en: Translation = {
 	[Key.videoPrev]: "Previous video",
 	[Key.videoNext]: "Next video",
 	[Key.videoLoadError]: "Video failed to load",
+
+	// Navigation menu groups
+	[Key.navPosts]: "Posts",
+	[Key.navSocial]: "Social",
+	[Key.navMy]: "My",
+	[Key.navAbout]: "About",
+	[Key.navLinks]: "Links",
 };

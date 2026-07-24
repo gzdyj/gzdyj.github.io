@@ -414,6 +414,13 @@ enum I18nKey {
 	videoPrev = "videoPrev",
 	videoNext = "videoNext",
 	videoLoadError = "videoLoadError",
+
+	// 导航菜单分组
+	navPosts = "navPosts",
+	navSocial = "navSocial",
+	navMy = "navMy",
+	navAbout = "navAbout",
+	navLinks = "navLinks",
 }
 
 export default I18nKey;

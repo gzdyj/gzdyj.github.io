@@ -429,4 +429,10 @@ export const ru: Translation = {
 	[Key.videoPrev]: "Предыдущее видео",
 	[Key.videoNext]: "Следующее видео",
 	[Key.videoLoadError]: "Не удалось загрузить видео",
+
+	[Key.navPosts]: "Статьи",
+	[Key.navSocial]: "Соцсети",
+	[Key.navMy]: "Моё",
+	[Key.navAbout]: "О нас",
+	[Key.navLinks]: "Ссылки",
 };

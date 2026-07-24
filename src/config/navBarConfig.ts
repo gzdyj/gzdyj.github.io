@@ -5,6 +5,18 @@ import {
 	NavBarSearchMethod,
 } from "../types/navBarConfig";
 
+// 构建语言，直接读取 env 避免循环依赖
+const buildLang =
+	(typeof import.meta !== "undefined" &&
+		import.meta.env &&
+		import.meta.env.PUBLIC_BUILD_LANG) ||
+	"zh";
+
+// 导航标签语言映射
+function t(zh: string, en: string): string {
+	return buildLang === "en" ? en : zh;
+}
+
 // ============================================================================
 // 导航栏配置 - 根据顺序动态生成导航栏链接
 // NavBar Configuration - Dynamically generate navigation bar links based on order
@@ -18,7 +30,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 	// 文章及其子菜单
 	links.push({
-		name: "文章",
+		name: t("文章", "Posts"),
 		url: "#",
 		icon: "material-symbols:article",
 		children: [
@@ -35,7 +47,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 	//社交及其子菜单
 	links.push({
-		name: "社交",
+		name: t("社交", "Social"),
 		url: "#",
 		icon: "material-symbols:group",
 		children: [
@@ -49,7 +61,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 	// 我的及其子菜单
 	links.push({
-		name: "我的",
+		name: t("我的", "My"),
 		url: "#",
 		icon: "material-symbols:person",
 		children: [
@@ -69,7 +81,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 	// 关于及其子菜单
 	links.push({
-		name: "关于",
+		name: t("关于", "About"),
 		url: "#",
 		icon: "material-symbols:info",
 		children: [
@@ -83,7 +95,7 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 
 	// 自定义导航栏链接
 	links.push({
-		name: "链接",
+		name: t("链接", "Links"),
 		url: "#",
 		icon: "material-symbols:link",
 		// 子菜单
@@ -101,13 +113,13 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 				icon: "fa7-brands:gitee",
 			},
 			{
-				name: "QQ交流群",
+				name: "QQ Group",
 				url: "https://qm.qq.com/q/ZGsFa8qX2G",
 				external: true,
 				icon: "fa7-brands:qq",
 			},
 			{
-				name: "Firefly文档",
+				name: "Firefly Docs",
 				url: "https://docs-firefly.cuteleaf.cn",
 				external: true,
 				icon: "material-symbols:docs",
@@ -137,68 +149,68 @@ export const navBarSearchConfig: NavBarSearchConfig = {
 // ============================================================================
 export const LinkPresets: Record<string, NavBarLink> = {
 	Home: {
-		name: "主页",
+		name: t("主页", "Home"),
 		url: "/",
 		icon: "material-symbols:home",
 	},
 	Dynamic: {
-		name: "动态",
+		name: t("动态", "Moments"),
 		url: "/dynamic/",
 		icon: "material-symbols:forum-rounded",
 		pageKey: "dynamic",
 	},
 	Archive: {
-		name: "归档",
+		name: t("归档", "Archive"),
 		url: "/archive/",
 		icon: "material-symbols:archive",
 	},
 	Categories: {
-		name: "分类",
+		name: t("分类", "Categories"),
 		url: "/categories/",
 		icon: "material-symbols:folder-open-rounded",
 	},
 	Tags: {
-		name: "标签",
+		name: t("标签", "Tags"),
 		url: "/tags/",
 		icon: "material-symbols:tag-rounded",
 	},
 	Friends: {
-		name: "友链",
+		name: t("友链", "Friends"),
 		url: "/friends/",
 		icon: "material-symbols:link-2-rounded",
 		pageKey: "friends",
 	},
 	Sponsor: {
-		name: "打赏",
+		name: t("打赏", "Sponsor"),
 		url: "/sponsor/",
 		icon: "material-symbols:favorite",
 		pageKey: "sponsor",
 	},
 	Guestbook: {
-		name: "留言",
+		name: t("留言", "Guestbook"),
 		url: "/guestbook/",
 		icon: "material-symbols:chat",
 		pageKey: "guestbook",
 	},
 	About: {
-		name: "关于我",
+		name: t("关于我", "About"),
 		url: "/about/",
 		icon: "material-symbols:person",
 	},
 	Bangumi: {
-		name: "番组计划",
+		name: t("番组计划", "Bangumi"),
 		url: "/bangumi/",
 		icon: "material-symbols:movie",
 		pageKey: "bangumi",
 	},
 	Gallery: {
-		name: "相册",
+		name: t("相册", "Gallery"),
 		url: "/gallery/",
 		icon: "material-symbols:photo-library",
 		pageKey: "gallery",
 	},
 	Anime: {
-		name: "追番",
+		name: t("追番", "Anime"),
 		url: "/anime/",
 		icon: "material-symbols:live-tv",
 		pageKey: "anime",

@@ -418,4 +418,10 @@ export const zh_TW: Translation = {
 	[Key.videoPrev]: "上一個影片",
 	[Key.videoNext]: "下一個影片",
 	[Key.videoLoadError]: "影片載入失敗",
+
+	[Key.navPosts]: "文章",
+	[Key.navSocial]: "社交",
+	[Key.navMy]: "我的",
+	[Key.navAbout]: "關於",
+	[Key.navLinks]: "連結",
 };

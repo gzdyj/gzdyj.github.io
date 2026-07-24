@@ -416,4 +416,11 @@ export const zh_CN: Translation = {
 	[Key.videoPrev]: "上一个视频",
 	[Key.videoNext]: "下一个视频",
 	[Key.videoLoadError]: "视频加载失败",
+
+	// 导航菜单分组
+	[Key.navPosts]: "文章",
+	[Key.navSocial]: "社交",
+	[Key.navMy]: "我的",
+	[Key.navAbout]: "关于",
+	[Key.navLinks]: "链接",
 };

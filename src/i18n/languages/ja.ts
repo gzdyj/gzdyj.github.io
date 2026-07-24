@@ -426,4 +426,10 @@ export const ja: Translation = {
 	[Key.videoPrev]: "前の動画",
 	[Key.videoNext]: "次の動画",
 	[Key.videoLoadError]: "動画の読み込みに失敗しました",
+
+	[Key.navPosts]: "投稿",
+	[Key.navSocial]: "ソーシャル",
+	[Key.navMy]: "マイ",
+	[Key.navAbout]: "について",
+	[Key.navLinks]: "リンク",
 };

@@ -1,5 +1,9 @@
 import type { ProfileConfig } from "../types/profileConfig";
 
+// 构建语言，通过环境变量 PUBLIC_BUILD_LANG 控制
+const buildLang =
+	(import.meta.env && import.meta.env.PUBLIC_BUILD_LANG) || "zh";
+
 export const profileConfig: ProfileConfig = {
 	// 头像
 	// 图片路径支持三种格式：
@@ -12,7 +16,9 @@ export const profileConfig: ProfileConfig = {
 	name: "gzdyj",
 
 	// 个人签名
-	bio: "代码与生活，不断前行。",
+	bio: buildLang === "en"
+		? "Code, life, and everything in between."
+		: "代码与生活，不断前行。",
 
 	// 链接配置
 	// 已经预装的图标集：fa7-brands，fa7-regular，fa7-solid，material-symbols，simple-icons
