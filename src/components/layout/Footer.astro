@@ -1,10 +1,13 @@
 ---
 import fs from "node:fs";
 import path from "node:path";
-import { footerConfig, profileConfig } from "@/config";
+import { footerConfig, profileConfig, siteConfig } from "@/config";
 import { url } from "@/utils/url-utils";
 
 const currentYear = new Date().getFullYear();
+
+// 中文站显示又拍云合作伙伴标识
+const showUpyunCredit = siteConfig.lang === "zh_CN";
 
 // 读取FooterConfig.html文件内容
 let customFooterHtml = "";
@@ -41,6 +44,26 @@ if (footerConfig.enable) {
     <div class="mb-2">
       {customFooterHtml && <div set:html={customFooterHtml} />}
     </div>
+    {
+      showUpyunCredit && (
+        <div class="m-0.5 flex items-center justify-center gap-1.5 flex-wrap text-30 text-xs">
+          <span>本网站由</span>
+          <a
+            href="https://www.upyun.com/?utm_source=lianmeng&amp;utm_medium=referral"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="inline-flex items-center gap-1 link"
+          >
+            <img
+              src={url("/images/upyun-logo.png")}
+              alt="又拍云"
+              class="h-5 w-auto"
+            />
+          </a>
+          <span>提供 CDN 加速</span>
+        </div>
+      )
+    }
     <div class="m-0.5 flex gap-2 justify-center flex-wrap">
       &copy; <span id="copyright-year">{currentYear}</span>
       {profileConfig.name}. All Rights Reserved.
