@@ -36,18 +36,16 @@ jobs:
       - name: Build Chinese site
         run: pnpm run build:zh
 
-      - name: Deploy to 又拍云
+      - name: Deploy to 又拍云 (S3 API)
         env:
-          UPYUN_CREDENTIAL: ${{ secrets.YOUPAI_OPERATOR }}
-          UPYUN_BUCKET: ${{ secrets.YOUPAI_BUCKET }}
+          AWS_ACCESS_KEY_ID: ${{ secrets.YOUPAI_ACCESSKEY }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.YOUPAI_SECRETACCESSKEY }}
+          AWS_DEFAULT_REGION: auto
+          AWS_ENDPOINT_URL: https://s3.api.upyun.com
+          BUCKET: ${{ secrets.YOUPAI_BUCKET }}
         run: |
-          # 安装 UPX (又拍云命令行工具)
-          curl -sL https://github.com/upyun/upx/releases/download/v0.4.9/upx_0.4.9_linux_amd64.tar.gz -o /tmp/upx.tar.gz
-          tar -xzf /tmp/upx.tar.gz -C /tmp --strip-components=0
-          chmod +x /tmp/upx
-          # 登录并同步 dist/ 到又拍云存储
-          /tmp/upx login "$UPYUN_CREDENTIAL" "$UPYUN_CREDENTIAL" "$UPYUN_BUCKET"
-          /tmp/upx sync ./dist / --delete
+          # 使用 AWS CLI v2 的 S3 兼容 API 同步到又拍云存储
+          aws s3 sync ./dist/ "s3://${BUCKET}/" --endpoint-url "${AWS_ENDPOINT_URL}" --delete --no-progress
 
   deploy-en:
     runs-on: ubuntu-latest
