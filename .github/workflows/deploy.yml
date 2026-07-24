@@ -1,4 +1,4 @@
-name: Deploy to Cloudflare Pages
+name: Deploy
 
 on:
   push:
@@ -13,9 +13,9 @@ permissions:
   contents: read
 
 jobs:
-  deploy:
+  deploy-zh:
     runs-on: ubuntu-latest
-    name: Build and Deploy
+    name: Build and Deploy Chinese Site → 又拍云
     steps:
       - uses: actions/checkout@v4
 
@@ -33,8 +33,44 @@ jobs:
       - name: Install dependencies
         run: pnpm install --no-frozen-lockfile
 
-      - name: Build site
-        run: pnpm run build
+      - name: Build Chinese site
+        run: pnpm run build:zh
+
+      - name: Deploy to 又拍云
+        env:
+          YOUPAI_OPERATOR: ${{ secrets.YOUPAI_OPERATOR }}
+          YOUPAI_PASSWORD: ${{ secrets.YOUPAI_PASSWORD }}
+          YOUPAI_BUCKET: ${{ secrets.YOUPAI_BUCKET }}
+        run: |
+          # 安装 UPX (又拍云命令行工具)
+          curl -sL https://github.com/upyun/upx/releases/latest/download/upx-linux-amd64 -o /tmp/upx
+          chmod +x /tmp/upx
+          # 登录并同步 dist/ 到又拍云存储
+          /tmp/upx login "$YOUPAI_OPERATOR" "$YOUPAI_PASSWORD" "$YOUPAI_BUCKET"
+          /tmp/upx sync ./dist / --delete
+
+  deploy-en:
+    runs-on: ubuntu-latest
+    name: Build and Deploy English Site → Cloudflare Pages
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9.14.4
+          run_install: false
+
+      - name: Install dependencies
+        run: pnpm install --no-frozen-lockfile
+
+      - name: Build English site
+        run: pnpm run build:en
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/wrangler-action@v3

@@ -4,6 +4,7 @@ published: 2026-07-23
 description: 梳理 docker commit/export/import/save/load 的区别与适用场景，帮你选对正确的命令。
 tags: [Docker]
 category: Linux运维与部署
+lang: "zh"
 ---
 
 # Docker 镜像与容器导入导出命令详解

@@ -4,6 +4,7 @@ published: 2026-07-23
 description: 通过 acme.sh + Cloudflare DNS API 免费申请 Let's Encrypt 泛域名证书，并自动续期。
 tags: [SSL, acme.sh, HTTPS, Cloudflare, 证书]
 category: Linux运维与部署
+lang: "zh"
 ---
 
 # 使用 acme.sh 申请泛域名 SSL 证书

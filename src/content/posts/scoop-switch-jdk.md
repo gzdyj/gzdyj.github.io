@@ -4,6 +4,7 @@ published: 2026-07-23
 description: 在 Windows 上使用 Scoop 包管理器安装多版本 JDK 并一键切换，告别手动配置环境变量的烦恼。
 tags: [Scoop, JDK, Java, Windows, 开发工具]
 category: 开发工具
+lang: "zh"
 ---
 
 # 利用 Scoop 自由切换 Java (JDK) 版本

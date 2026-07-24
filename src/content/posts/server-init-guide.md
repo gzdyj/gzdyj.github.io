@@ -4,6 +4,7 @@ published: 2026-07-23
 description: 新服务器到手后的安全加固与常用软件安装清单，包含 SSH 安全配置、Docker、NPM 等。
 tags: [Linux, 服务器, 安全, SSH, Docker]
 category: Linux运维与部署
+lang: "zh"
 ---
 
 # 服务器日常初始化指南

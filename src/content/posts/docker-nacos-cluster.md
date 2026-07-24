@@ -4,6 +4,7 @@ published: 2026-07-23
 description: 基于 Docker 部署 Nacos 2.2 三节点集群，搭配 MySQL 持久化与 Nginx 负载均衡的完整实践。
 tags: [Docker, Nacos, 集群, 负载均衡, Nginx]
 category: Linux运维与部署
+lang: "zh"
 ---
 
 # 使用 Docker 完成 Nacos 集群部署

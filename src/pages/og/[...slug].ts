@@ -26,7 +26,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
 	}
 
 	const allPosts = await getCollection("posts");
-	const publishedPosts = allPosts.filter((post) => !post.data.draft);
+	const buildLang = import.meta.env.PUBLIC_BUILD_LANG || "";
+	const publishedPosts = allPosts.filter(
+		(post) =>
+			!post.data.draft &&
+			(!buildLang || post.data.lang === buildLang),
+	);
 
 	return publishedPosts.map((post) => {
 		// 将 id 转换为 slug（移除扩展名）以匹配路由参数
