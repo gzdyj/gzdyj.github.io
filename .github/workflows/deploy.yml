@@ -38,15 +38,14 @@ jobs:
 
       - name: Deploy to 又拍云
         env:
-          YOUPAI_OPERATOR: ${{ secrets.YOUPAI_OPERATOR }}
-          YOUPAI_PASSWORD: ${{ secrets.YOUPAI_PASSWORD }}
-          YOUPAI_BUCKET: ${{ secrets.YOUPAI_BUCKET }}
+          UPYUN_CREDENTIAL: ${{ secrets.YOUPAI_OPERATOR }}
+          UPYUN_BUCKET: ${{ secrets.YOUPAI_BUCKET }}
         run: |
           # 安装 UPX (又拍云命令行工具)
           curl -sL https://github.com/upyun/upx/releases/latest/download/upx-linux-amd64 -o /tmp/upx
           chmod +x /tmp/upx
           # 登录并同步 dist/ 到又拍云存储
-          /tmp/upx login "$YOUPAI_OPERATOR" "$YOUPAI_PASSWORD" "$YOUPAI_BUCKET"
+          /tmp/upx login "$UPYUN_CREDENTIAL" "$UPYUN_CREDENTIAL" "$UPYUN_BUCKET"
           /tmp/upx sync ./dist / --delete
 
   deploy-en:
