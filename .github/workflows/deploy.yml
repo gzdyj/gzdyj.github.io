@@ -43,11 +43,11 @@ jobs:
         run: |
           # 安装 UPX (又拍云命令行工具)
           curl -sL https://github.com/upyun/upx/releases/download/v0.4.9/upx_0.4.9_linux_amd64.tar.gz -o /tmp/upx.tar.gz
-          tar -xzf /tmp/upx.tar.gz -C /tmp
-          chmod +x /tmp/upx_0.4.9_linux_amd64/upx
+          tar -xzf /tmp/upx.tar.gz -C /tmp --strip-components=0
+          chmod +x /tmp/upx
           # 登录并同步 dist/ 到又拍云存储
-          /tmp/upx_0.4.9_linux_amd64/upx login "$UPYUN_CREDENTIAL" "$UPYUN_CREDENTIAL" "$UPYUN_BUCKET"
-          /tmp/upx_0.4.9_linux_amd64/upx sync ./dist / --delete
+          /tmp/upx login "$UPYUN_CREDENTIAL" "$UPYUN_CREDENTIAL" "$UPYUN_BUCKET"
+          /tmp/upx sync ./dist / --delete
 
   deploy-en:
     runs-on: ubuntu-latest
