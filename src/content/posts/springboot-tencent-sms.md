@@ -4,6 +4,7 @@ published: 2026-07-23
 description: 从原始 API 调试到封装为 Spring Boot 工具类的渐进式实践，包含配置属性绑定和静态工具类设计。
 tags: [SpringBoot, 腾讯云, 短信, SMS]
 category: Java
+lang: "zh"
 ---
 
 # SpringBoot 调用腾讯云 API 发送短信

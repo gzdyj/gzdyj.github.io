@@ -3,11 +3,35 @@ import I18nKey from "@i18n/i18nKey";
 import { i18n } from "@i18n/translation";
 import { getCategoryUrl } from "@utils/url-utils";
 
+/**
+ * 当前构建的目标语言。在开发模式下（未设置环境变量）返回空字符串，表示不过滤。
+ * 在构建时通过 PUBLIC_BUILD_LANG 环境变量控制（"zh" 或 "en"）。
+ */
+function getBuildLang(): string {
+	return import.meta.env.PUBLIC_BUILD_LANG || "";
+}
+
+/**
+ * 根据构建语言过滤 post 的 filter 函数。
+ * 开发模式下不过滤，生产构建时只保留匹配语言的 post。
+ */
+function postLangFilter({ data }: { data: { lang?: string } }): boolean {
+	const buildLang = getBuildLang();
+	if (!buildLang) return true; // dev mode: show all
+	return data.lang === buildLang;
+}
+
+/**
+ * 同时过滤草稿和语言的通用 filter
+ */
+function postFilter({ data }: { data: { draft?: boolean; lang?: string } }): boolean {
+	const isPublished = import.meta.env.PROD ? data.draft !== true : true;
+	return isPublished && postLangFilter({ data });
+}
+
 // // Retrieve posts and sort them by publication date
 async function getRawSortedPosts() {
-	const allBlogPosts = await getCollection("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
-	});
+	const allBlogPosts = await getCollection("posts", postFilter);
 
 	const sorted = allBlogPosts.sort((a, b) => {
 		// 首先按置顶状态排序，置顶文章在前
@@ -57,9 +81,7 @@ export type Tag = {
 };
 
 export async function getTagList(): Promise<Tag[]> {
-	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
-	});
+	const allBlogPosts = await getCollection<"posts">("posts", postFilter);
 
 	const countMap: { [key: string]: number } = {};
 	allBlogPosts.forEach((post: { data: { tags: string[] } }) => {
@@ -84,9 +106,7 @@ export type Category = {
 };
 
 export async function getCategoryList(): Promise<Category[]> {
-	const allBlogPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
-	});
+	const allBlogPosts = await getCollection<"posts">("posts", postFilter);
 	const count: { [key: string]: number } = {};
 	allBlogPosts.forEach((post: { data: { category: string | null } }) => {
 		if (!post.data.category) {
@@ -160,9 +180,7 @@ export async function getRelatedPosts(
 	currentPost: CollectionEntry<"posts">,
 	maxCount = 5,
 ): Promise<PostForList[]> {
-	const allPosts = await getCollection<"posts">("posts", ({ data }) => {
-		return import.meta.env.PROD ? data.draft !== true : true;
-	});
+	const allPosts = await getCollection<"posts">("posts", postFilter);
 
 	// 排除自身和加密文章
 	const candidates = allPosts.filter(

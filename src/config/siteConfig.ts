@@ -1,24 +1,62 @@
 import type { SiteConfig } from "@/types/siteConfig";
 
-// 定义站点语言
-// 语言代码，例如：'zh_CN', 'zh_TW', 'en', 'ja', 'ru', 'ko'。
-const SITE_LANG = "zh_CN";
+// 构建语言，通过环境变量 PUBLIC_BUILD_LANG 控制
+// 设置为 "en" 构建英文站，"zh" 构建中文站（默认）
+const buildLang = import.meta.env.PUBLIC_BUILD_LANG || "zh";
+
+type SiteConfigOverrides = {
+	lang: SiteConfig["lang"];
+	title: string;
+	subtitle: string;
+	site_url: string;
+	description: string;
+	keywords: string[];
+};
+
+const overridesByLang: Record<string, SiteConfigOverrides> = {
+	zh: {
+		lang: "zh_CN",
+		title: "gzdyj 的博客",
+		subtitle: "记录技术，分享生活",
+		site_url: "https://blog.zinzin.cc",
+		description: "gzdyj 的个人博客，记录技术成长与生活思考。",
+		keywords: ["gzdyj", "博客", "技术博客", "个人博客", "Astro", "Firefly"],
+	},
+	en: {
+		lang: "en",
+		title: "GzDyi's Blog",
+		subtitle: "Code, Life, and Everything in Between",
+		site_url: "https://blog.zinzin.top",
+		description:
+			"GzDyi's personal blog about software development, DevOps, and life.",
+		keywords: [
+			"gzdyj",
+			"blog",
+			"tech blog",
+			"personal blog",
+			"Astro",
+			"Firefly",
+		],
+	},
+};
+
+const langOverrides = overridesByLang[buildLang] || overridesByLang.zh;
 
 export const siteConfig: SiteConfig = {
 	// 站点标题
-	title: "gzdyj 的博客",
+	title: langOverrides.title,
 
 	// 站点副标题
-	subtitle: "记录技术，分享生活",
+	subtitle: langOverrides.subtitle,
 
 	// 站点 URL
-	site_url: "https://blog.zinzin.cc",
+	site_url: langOverrides.site_url,
 
 	// 站点描述
-	description: "gzdyj 的个人博客，记录技术成长与生活思考。",
+	description: langOverrides.description,
 
 	// 站点关键词
-	keywords: ["gzdyj", "博客", "技术博客", "个人博客", "Astro", "Firefly"],
+	keywords: langOverrides.keywords,
 
 	// 主题色
 	themeColor: {
@@ -241,6 +279,6 @@ export const siteConfig: SiteConfig = {
 		noReferrerDomains: ["*.hdslb.com", "*.bilibili.com"],
 	},
 
-	// 站点语言，在本配置文件顶部SITE_LANG定义
-	lang: SITE_LANG,
+	// 站点语言，根据构建环境自动选择
+	lang: langOverrides.lang,
 };
