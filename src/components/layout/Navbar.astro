@@ -179,22 +179,22 @@ if (isLocalSrcLogo) {
                             <Icon is:inline name="material-symbols:palette-outline" class="text-[1.25rem]"></Icon>
                         </button>
                 )}
-                {/* 语言切换：中文站→EN，英文站→中文 */}
+                {/* 语言切换：中文站→English，英文站→中文 */}
                 {
                     siteConfig.lang === "zh_CN" ? (
                         <a
                             href="https://blog.zinzin.top"
                             aria-label="English"
-                            class="btn-plain scale-animation rounded-lg h-9 w-9 md:h-11 md:w-11 active:scale-90 inline-flex items-center justify-center text-xs font-bold no-underline"
+                            class="btn-plain scale-animation rounded-lg h-9 w-9 md:h-11 md:w-11 active:scale-90 inline-flex items-center justify-center no-underline"
                             title="English Site"
-                        >EN</a>
+                        ><Icon is:inline name="material-symbols:language" class="text-[1.25rem]" /></a>
                     ) : (
                         <a
                             href="https://blog.zinzin.cc"
                             aria-label="中文"
-                            class="btn-plain scale-animation rounded-lg h-9 w-9 md:h-11 md:w-11 active:scale-90 inline-flex items-center justify-center text-xs font-bold no-underline"
+                            class="btn-plain scale-animation rounded-lg h-9 w-9 md:h-11 md:w-11 active:scale-90 inline-flex items-center justify-center no-underline"
                             title="中文站"
-                        >中</a>
+                        ><Icon is:inline name="material-symbols:language" class="text-[1.25rem]" /></a>
                     )
                 }
                 {/* @ts-ignore */}
