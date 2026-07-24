@@ -2,7 +2,8 @@ import type { SiteConfig } from "@/types/siteConfig";
 
 // 构建语言，通过环境变量 PUBLIC_BUILD_LANG 控制
 // 设置为 "en" 构建英文站，"zh" 构建中文站（默认）
-const buildLang = import.meta.env.PUBLIC_BUILD_LANG || "zh";
+const buildLang =
+	(import.meta.env && import.meta.env.PUBLIC_BUILD_LANG) || "zh";
 
 type SiteConfigOverrides = {
 	lang: SiteConfig["lang"];
