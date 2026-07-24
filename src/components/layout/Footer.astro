@@ -42,7 +42,7 @@ if (footerConfig.enable) {
 >
   <div class="transition text-50 text-sm text-center wrap">
     <div class="mb-2">
-      {customFooterHtml && <div set:html={customFooterHtml} />}
+      {showUpyunCredit && customFooterHtml && <div set:html={customFooterHtml} />}
     </div>
     {
       showUpyunCredit && (
