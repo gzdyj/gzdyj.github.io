@@ -62,7 +62,7 @@ jobs:
             exit 0
           fi
           # 又拍云 purge API: 需要 MD5 签名认证
-          URLS="https://blog.zinzin.cc/ https://blog.zinzin.cc/index.html"
+          URLS="https://blog.zinzin.cc/ https://blog.zinzin.cc/index.html https://blog.zinzin.cc/about/ https://blog.zinzin.cc/about/index.html"
           DATE=$(date -u "+%a, %d %b %Y %H:%M:%S GMT")
           MD5_PWD=$(echo -n "$PASSWORD" | md5sum | cut -d ' ' -f1)
           PURGE_DATA=$(printf "%s" "$URLS" | tr ' ' '\n')
