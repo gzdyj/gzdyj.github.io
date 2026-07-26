@@ -48,12 +48,15 @@ jobs:
           aws s3 sync ./dist/ "s3://${BUCKET}/" --endpoint-url "${AWS_ENDPOINT_URL}" --delete --no-progress
 
       - name: Purge 又拍云 CDN cache
-        if: ${{ secrets.YOUPAI_PASSWORD != '' }}
         shell: bash
         env:
           OPERATOR: ${{ secrets.YOUPAI_OPERATOR }}
           PASSWORD: ${{ secrets.YOUPAI_PASSWORD }}
         run: |
+          if [ -z "$PASSWORD" ]; then
+            echo "YOUPAI_PASSWORD not set, skipping CDN purge"
+            exit 0
+          fi
           # 刷新又拍云 CDN 缓存，清除 CDN 节点上的旧页面
           curl -s -X POST "https://api.upyun.com/purge/" \
             -H "Authorization: Upyun-Operator ${OPERATOR}:${PASSWORD}" \
