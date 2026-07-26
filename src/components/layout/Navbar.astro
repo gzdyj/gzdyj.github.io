@@ -77,7 +77,6 @@ function filterLinks(link: NavBarLink): NavBarLink | null {
 	const filteredChildren = link.children.filter(isPageEnabled);
 
 	if (filteredChildren.length === 0) return null;
-	if (filteredChildren.length === 1) return filteredChildren[0];
 	return { ...link, children: filteredChildren };
 }
 
