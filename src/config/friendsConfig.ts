@@ -20,7 +20,7 @@ export const friendsConfig: FriendLink[] = [
 	},
 	{
 		title: "久雨",
-		imgurl: "https://www.gravatar.com/avatar/?d=mp&s=128",
+		imgurl: "https://www.gravatar.com/avatar/00000000000000000000000000000000?d=mp&s=128",
 		desc: "久雨的 Halo 博客。",
 		siteurl: "http://109.107.137.49:8090/",
 		tags: ["博客"],
