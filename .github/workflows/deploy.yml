@@ -51,20 +51,26 @@ jobs:
         shell: bash
         env:
           OPERATOR: ${{ secrets.YOUPAI_OPERATOR }}
-          PASSWORD: ${{ secrets.YOUPAI_PASSWORD }}
+          PASSWORD: ${{ secrets.YOUPAI_OPERATOR_PWD }}
+          BUCKET: ${{ secrets.YOUPAI_BUCKET }}
         run: |
           if [ -z "$PASSWORD" ]; then
-            echo "YOUPAI_PASSWORD not set, skipping CDN purge"
+            echo "YOUPAI_OPERATOR_PWD not set, skipping CDN purge"
+            echo "Set it in GitHub Secrets with your 又拍云 operator password"
             exit 0
           fi
-          # 刷新又拍云 CDN 缓存，清除 CDN 节点上的旧页面
-          curl -s -X POST "https://api.upyun.com/purge/" \
-            -H "Authorization: Upyun-Operator ${OPERATOR}:${PASSWORD}" \
-            -H "Content-Type: application/json" \
-            -d '{"purge_urls": [
-              "https://blog.zinzin.cc/",
-              "https://blog.zinzin.cc/index.html"
-            ]}'
+          # 又拍云 purge API: 需要 MD5 签名认证
+          URLS="https://blog.zinzin.cc/ https://blog.zinzin.cc/index.html"
+          DATE=$(date -u "+%a, %d %b %Y %H:%M:%S GMT")
+          MD5_PWD=$(echo -n "$PASSWORD" | md5sum | cut -d ' ' -f1)
+          PURGE_DATA=$(printf "%s" "$URLS" | tr ' ' '\n')
+          SIGN_INPUT="${PURGE_DATA}&${BUCKET}&${DATE}&${MD5_PWD}"
+          SIGN=$(echo -n "$SIGN_INPUT" | md5sum | cut -d ' ' -f1)
+          AUTH="UpYun ${BUCKET}:${OPERATOR}:${SIGN}"
+          curl -s -X POST "http://purge.upyun.com/purge/" \
+            -H "Authorization: ${AUTH}" \
+            -H "Date: ${DATE}" \
+            -F "purge=${PURGE_DATA}"
 
   deploy-en:
     runs-on: ubuntu-latest
