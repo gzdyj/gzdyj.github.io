@@ -1,4 +1,4 @@
-# gzdyj.github.io 站点架构 / Site Architecture
+# gzdyj-blog 站点架构 / Site Architecture
 
 ---
 

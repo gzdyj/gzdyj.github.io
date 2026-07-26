@@ -1,4 +1,4 @@
-# gzdyj.github.io — 个人博客（中英双语）
+# gzdyj-blog — 个人博客（中英双语）
 
 基于 Astro 7 + Firefly 主题的个人博客，**中英双站**，分别部署到不同 CDN。
 
