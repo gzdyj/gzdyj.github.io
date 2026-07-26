@@ -113,12 +113,6 @@ const getDynamicNavBarConfig = (): NavBarConfig => {
 				icon: "fa7-brands:gitee",
 			},
 			{
-				name: "QQ Group",
-				url: "https://qm.qq.com/q/ZGsFa8qX2G",
-				external: true,
-				icon: "fa7-brands:qq",
-			},
-			{
 				name: "Firefly Docs",
 				url: "https://docs-firefly.cuteleaf.cn",
 				external: true,
