@@ -40,10 +40,12 @@ jobs:
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.YOUPAI_ACCESSKEY }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.YOUPAI_SECRETACCESSKEY }}
-          AWS_DEFAULT_REGION: auto
+          AWS_DEFAULT_REGION: us-east-1
+          AWS_S3_FORCE_PATH_STYLE: true
           AWS_ENDPOINT_URL: https://s3.api.upyun.com
           BUCKET: ${{ secrets.YOUPAI_BUCKET }}
         run: |
+          aws configure set default.s3.signature_version s3v4
           # 使用 AWS CLI v2 的 S3 兼容 API 同步到又拍云存储
           aws s3 sync ./dist/ "s3://${BUCKET}/" --endpoint-url "${AWS_ENDPOINT_URL}" --delete --no-progress
 
