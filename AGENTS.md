@@ -98,6 +98,8 @@ lang: "en"
   - `YOUPAI_ACCESSKEY` — 又拍云 S3 Access Key
   - `YOUPAI_SECRETACCESSKEY` — 又拍云 S3 Secret Key
   - `YOUPAI_BUCKET` — 又拍云存储桶名
+  - `YOUPAI_OPERATOR` — 又拍云操作员名
+  - `YOUPAI_OPERATOR_PWD` — 又拍云操作员密码（用于部署后自动刷新 CDN 缓存）
 
 ## 编码规范
 
