@@ -6,7 +6,9 @@ import I18nKey from "@/i18n/i18nKey";
 import { i18n } from "@/i18n/translation";
 import MainGridLayout from "@/layouts/MainGridLayout.astro";
 
-const aboutPost = await getEntry("spec", "about");
+const buildLang = import.meta.env.PUBLIC_BUILD_LANG;
+const aboutId = buildLang === "en" ? "about-en" : "about";
+const aboutPost = await getEntry("spec", aboutId);
 
 if (!aboutPost) {
 	throw new Error("About page content not found");
