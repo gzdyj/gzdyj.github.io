@@ -78,7 +78,6 @@ jobs:
         run: pip install google-api-python-client oauth2client
 
       - name: Submit sitemap to Google Search Console
-        if: ${{ secrets.GOOGLE_SEARCH_CONSOLE_JSON != '' }}
         shell: python
         env:
           CREDENTIALS_JSON: ${{ secrets.GOOGLE_SEARCH_CONSOLE_JSON }}
@@ -86,11 +85,17 @@ jobs:
           SITEMAP_URL: https://blog.zinzin.cc/sitemap-index.xml
         run: |
           import json, os, sys
+
+          credentials_json = os.environ.get("CREDENTIALS_JSON")
+          if not credentials_json:
+              print("GOOGLE_SEARCH_CONSOLE_JSON not set, skipping")
+              sys.exit(0)
+
           from googleapiclient.discovery import build
           from oauth2client.service_account import ServiceAccountCredentials
 
           credentials = ServiceAccountCredentials.from_json_keyfile_dict(
-              json.loads(os.environ["CREDENTIALS_JSON"]),
+              json.loads(credentials_json),
               ["https://www.googleapis.com/auth/webmasters"],
           )
           service = build("webmasters", "v3", credentials=credentials)
@@ -101,13 +106,18 @@ jobs:
           print(f"Submitted {os.environ['SITEMAP_URL']} ✅")
 
       - name: Send Telegram notification (zh)
-        if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' && secrets.TELEGRAM_CHAT_ID != '' }}
         env:
-          MSG: "✅ 中文站部署成功：blog.zinzin.cc%0A%F0%9F%94%97 ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          MSG: "✅ 中文站部署成功：blog.zinzin.cc%0A🔗 ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         run: |
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -d "text=${{ env.MSG }}" \
+          if [ -z "$BOT_TOKEN" ] || [ -z "$CHAT_ID" ]; then
+            echo "Telegram secrets not set, skipping"
+            exit 0
+          fi
+          curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${CHAT_ID}" \
+            -d "text=${MSG}" \
             -d "parse_mode=Markdown" > /dev/null
 
   deploy-en:
@@ -144,7 +154,6 @@ jobs:
         run: pip install google-api-python-client oauth2client
 
       - name: Submit sitemap to Google Search Console
-        if: ${{ secrets.GOOGLE_SEARCH_CONSOLE_JSON != '' }}
         shell: python
         env:
           CREDENTIALS_JSON: ${{ secrets.GOOGLE_SEARCH_CONSOLE_JSON }}
@@ -152,11 +161,17 @@ jobs:
           SITEMAP_URL: https://blog.zinzin.top/sitemap-index.xml
         run: |
           import json, os, sys
+
+          credentials_json = os.environ.get("CREDENTIALS_JSON")
+          if not credentials_json:
+              print("GOOGLE_SEARCH_CONSOLE_JSON not set, skipping")
+              sys.exit(0)
+
           from googleapiclient.discovery import build
           from oauth2client.service_account import ServiceAccountCredentials
 
           credentials = ServiceAccountCredentials.from_json_keyfile_dict(
-              json.loads(os.environ["CREDENTIALS_JSON"]),
+              json.loads(credentials_json),
               ["https://www.googleapis.com/auth/webmasters"],
           )
           service = build("webmasters", "v3", credentials=credentials)
@@ -167,11 +182,16 @@ jobs:
           print(f"Submitted {os.environ['SITEMAP_URL']} ✅")
 
       - name: Send Telegram notification (en)
-        if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' && secrets.TELEGRAM_CHAT_ID != '' }}
         env:
-          MSG: "✅ 英文站部署成功：blog.zinzin.top%0A%F0%9F%94%97 ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          MSG: "✅ 英文站部署成功：blog.zinzin.top%0A🔗 ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
         run: |
-          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
-            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
-            -d "text=${{ env.MSG }}" \
+          if [ -z "$BOT_TOKEN" ] || [ -z "$CHAT_ID" ]; then
+            echo "Telegram secrets not set, skipping"
+            exit 0
+          fi
+          curl -s -X POST "https://api.telegram.org/bot${BOT_TOKEN}/sendMessage" \
+            -d "chat_id=${CHAT_ID}" \
+            -d "text=${MSG}" \
             -d "parse_mode=Markdown" > /dev/null
