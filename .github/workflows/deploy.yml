@@ -100,6 +100,16 @@ jobs:
           ).execute()
           print(f"Submitted {os.environ['SITEMAP_URL']} ✅")
 
+      - name: Send Telegram notification (zh)
+        if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' && secrets.TELEGRAM_CHAT_ID != '' }}
+        env:
+          MSG: "✅ 中文站部署成功：blog.zinzin.cc%0A%F0%9F%94%97 ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d "text=${{ env.MSG }}" \
+            -d "parse_mode=Markdown" > /dev/null
+
   deploy-en:
     runs-on: ubuntu-latest
     name: Build and Deploy English Site → Cloudflare Pages
@@ -155,3 +165,13 @@ jobs:
               feedpath=os.environ["SITEMAP_URL"],
           ).execute()
           print(f"Submitted {os.environ['SITEMAP_URL']} ✅")
+
+      - name: Send Telegram notification (en)
+        if: ${{ secrets.TELEGRAM_BOT_TOKEN != '' && secrets.TELEGRAM_CHAT_ID != '' }}
+        env:
+          MSG: "✅ 英文站部署成功：blog.zinzin.top%0A%F0%9F%94%97 ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+        run: |
+          curl -s -X POST "https://api.telegram.org/bot${{ secrets.TELEGRAM_BOT_TOKEN }}/sendMessage" \
+            -d "chat_id=${{ secrets.TELEGRAM_CHAT_ID }}" \
+            -d "text=${{ env.MSG }}" \
+            -d "parse_mode=Markdown" > /dev/null
