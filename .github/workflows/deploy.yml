@@ -74,6 +74,32 @@ jobs:
             -H "Date: ${DATE}" \
             -F "purge=${PURGE_DATA}"
 
+      - name: Install Python deps for Google submission
+        run: pip install google-api-python-client oauth2client
+
+      - name: Submit sitemap to Google Search Console
+        if: ${{ secrets.GOOGLE_SEARCH_CONSOLE_JSON != '' }}
+        shell: python
+        env:
+          CREDENTIALS_JSON: ${{ secrets.GOOGLE_SEARCH_CONSOLE_JSON }}
+          SITE_URL: https://blog.zinzin.cc/
+          SITEMAP_URL: https://blog.zinzin.cc/sitemap-index.xml
+        run: |
+          import json, os, sys
+          from googleapiclient.discovery import build
+          from oauth2client.service_account import ServiceAccountCredentials
+
+          credentials = ServiceAccountCredentials.from_json_keyfile_dict(
+              json.loads(os.environ["CREDENTIALS_JSON"]),
+              ["https://www.googleapis.com/auth/webmasters"],
+          )
+          service = build("webmasters", "v3", credentials=credentials)
+          service.sitemaps().submit(
+              siteUrl=os.environ["SITE_URL"],
+              feedpath=os.environ["SITEMAP_URL"],
+          ).execute()
+          print(f"Submitted {os.environ['SITEMAP_URL']} ✅")
+
   deploy-en:
     runs-on: ubuntu-latest
     name: Build and Deploy English Site → Cloudflare Pages
@@ -103,3 +129,29 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: 5deb3c4ef23e1f15ec2087e5d84a6b17
           command: pages deploy dist --project-name gzdyj-blog --branch main
+
+      - name: Install Python deps for Google submission
+        run: pip install google-api-python-client oauth2client
+
+      - name: Submit sitemap to Google Search Console
+        if: ${{ secrets.GOOGLE_SEARCH_CONSOLE_JSON != '' }}
+        shell: python
+        env:
+          CREDENTIALS_JSON: ${{ secrets.GOOGLE_SEARCH_CONSOLE_JSON }}
+          SITE_URL: https://blog.zinzin.top/
+          SITEMAP_URL: https://blog.zinzin.top/sitemap-index.xml
+        run: |
+          import json, os, sys
+          from googleapiclient.discovery import build
+          from oauth2client.service_account import ServiceAccountCredentials
+
+          credentials = ServiceAccountCredentials.from_json_keyfile_dict(
+              json.loads(os.environ["CREDENTIALS_JSON"]),
+              ["https://www.googleapis.com/auth/webmasters"],
+          )
+          service = build("webmasters", "v3", credentials=credentials)
+          service.sitemaps().submit(
+              siteUrl=os.environ["SITE_URL"],
+              feedpath=os.environ["SITEMAP_URL"],
+          ).execute()
+          print(f"Submitted {os.environ['SITEMAP_URL']} ✅")
